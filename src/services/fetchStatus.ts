@@ -1,11 +1,12 @@
 
 import { STEPS } from "./steps";
 
-const ID_BOARDS = '658c1664242f1f47da07c91e'
+const ID_BOARDS = '5ff8508fa9111b629721126f'
 export const fetchStatus = async (phone: string): Promise<string> => {
 
     let query = phone
-        .replaceAll(' ', '')
+        .replaceAll('+', '')
+        .trim()
         // .replaceAll('(', '')
         // .replaceAll(')', '')
         // .replaceAll('-', '')
@@ -18,7 +19,7 @@ export const fetchStatus = async (phone: string): Promise<string> => {
 
     const cards = result.cards
 
-    if (!cards || !cards.length) return 'Не найдено, попробуйте еще раз!'
+    if (!cards || !cards.length) return 'Не найдено, попробуйте поменять формат!'
 
     const card = cards[0]
 
@@ -37,8 +38,8 @@ const fetchListName = async (listId: string): Promise<string> => {
     const step = STEPS[index]
     const nextStep = STEPS[index + 1]
 
-    const status = `Статус: *${step.name}*\n` + 
-                    `Следующий этап: ${nextStep.name}\n` +
-                    `через: ${step.duration}`
+    const status = 'Статус: *' + step.name + '*\n' + 
+                    'займет ' + step.duration  + '\n' +
+                    'Следующий этап: ' + nextStep.name
     return status
 }
