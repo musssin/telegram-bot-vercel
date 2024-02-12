@@ -21,7 +21,6 @@ export const fetchStatus = async (phone: string): Promise<string> => {
     const card = cards[0]
 
 
-
     return await fetchListName(card.idList)
 }
 
