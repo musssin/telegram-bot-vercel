@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "description": "Telegram Bot Vercel Boilerplate",
   "main": "src/index.ts",
-  "author": "Mark Pavlov (https://github.com/sollidy)",
+  "author": "Yernat Mussin (https://github.com/sollidy)",
   "homepage": "https://github.com/sollidy/telegram-bot-vercel-boilerplate",
   "dependencies": {
     "@vercel/node": "^3.0.13",
