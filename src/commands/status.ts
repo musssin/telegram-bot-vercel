@@ -11,7 +11,7 @@ const status = (bot: Telegraf) => async (ctx: Context) => {
 
   const message = `*Введите ваш номер:*`;
 
-  await ctx.reply(message)
+  await ctx.replyWithMarkdownV2(message)
 
   bot.on('message', checkStatus())
 
