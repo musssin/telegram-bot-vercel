@@ -31,5 +31,5 @@ const fetchListName = async (listId: string): Promise<string> => {
         method: 'GET'
     })
     const result = await response.json()
-    return result.name
+    return `Статус: ${result.name}`
 }
