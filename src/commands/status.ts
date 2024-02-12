@@ -20,6 +20,6 @@ const status = (bot: Telegraf) => async (ctx: Context) => {
 const checkStatus = () => async (ctx: Context) => {
   const message = ctx.message as Message.TextMessage
   const result = await fetchStatus(message.text)
-  await ctx.replyWithMarkdownV2(result)
+  await ctx.replyWithMarkdownV2(result, { parse_mode: 'Markdown' })
 }
 export { status };
