@@ -31,5 +31,7 @@ const fetchListName = async (listId: string): Promise<string> => {
         method: 'GET'
     })
     const result = await response.json()
-    return `Статус: ${result.name}`
+
+    const status = `Статус: ${result.name?.split(':')[0]}`
+    return status
 }
