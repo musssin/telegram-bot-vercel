@@ -1,10 +1,10 @@
 import { Telegraf } from 'telegraf';
 
 import { about, status } from './commands';
-import { greeting } from './text';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { development, production } from './core';
-
+import express = require('express');
+import bodyParser = require('body-parser');
 const BOT_TOKEN = process.env.BOT_TOKEN || '';
 const ENVIRONMENT = process.env.NODE_ENV || '';
 
@@ -18,3 +18,6 @@ export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
 };
 //dev mode
 ENVIRONMENT !== 'production' && development(bot);
+
+const app = express()
+app.use(bodyParser.json())
