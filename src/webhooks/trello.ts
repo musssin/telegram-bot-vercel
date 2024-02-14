@@ -22,7 +22,7 @@ export const trelloWebHook = async (req: any, res: any) => {
 
         bot.telegram.sendMessage('812794909', 'fetched');
         bot.telegram.sendMessage('812794909', JSON.stringify(card));
-        const changedStatusIndex = req.body?.action?.display?.entities?.listAfter?.name?.split('.')[0];
+        const changedStatusIndex = parseInt(req.body?.action?.display?.entities?.listAfter?.name?.split('.')[0]);
         const changedStatus = STEPS[changedStatusIndex]
         const changedStatusNext = STEPS[changedStatusIndex]
 
@@ -39,7 +39,5 @@ export const trelloWebHook = async (req: any, res: any) => {
         res.sendStatus(200);
     } catch (error) {
         bot.telegram.sendMessage('812794909', error.message.toString());
-        debug(error)
-        log(error)
     }
 }
