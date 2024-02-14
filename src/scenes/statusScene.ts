@@ -15,7 +15,6 @@ const checkStatus = () => async (ctx: Scenes.SceneContext) => {
   
   leave<Scenes.SceneContext>()
   
-  ctx.scene.leave()
 
 }
 
@@ -24,7 +23,7 @@ const statusScene = new Scenes.BaseScene<Scenes.SceneContext>("statusScene");
 const message = `*Введите ваш номер:*`;
 statusScene.enter(ctx => ctx.replyWithMarkdownV2(message));
 statusScene.command("back",leave<Scenes.SceneContext>() );
-statusScene.on("message", checkStatus());
+statusScene.on("callback_query", checkStatus());
 
 
 
