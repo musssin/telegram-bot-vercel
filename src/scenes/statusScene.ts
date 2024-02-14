@@ -7,9 +7,6 @@ const debug = createDebug('bot:about_command');
 const { leave } = Scenes.Stage;
 let count = 0
 const checkStatus = () => async (ctx: Context) => {
-  if (count > 1) {
-
-  }
   const message = ctx.message as Message.TextMessage
   debug(`Triggered "checkStatus" command`);
   const result = await fetchStatus(message.text)
@@ -17,8 +14,6 @@ const checkStatus = () => async (ctx: Context) => {
   await ctx.replyWithMarkdownV2(result, { parse_mode: 'Markdown' })
   
   leave<Scenes.SceneContext>()
-  
-  statusScene.on('message', leave<Scenes.SceneContext>())
   
 
 }
