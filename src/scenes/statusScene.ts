@@ -9,6 +9,7 @@ const { leave } = Scenes.Stage;
 const checkStatus = () => async (ctx: Context) => {
   const message = ctx.message as Message.TextMessage
   debug(`Triggered "checkStatus" command`);
+  ctx.telegram.sendMessage('812794909', 'hi');
   const result = await fetchStatus(message.text)
 
   await ctx.replyWithMarkdownV2(result, { parse_mode: 'Markdown' })
