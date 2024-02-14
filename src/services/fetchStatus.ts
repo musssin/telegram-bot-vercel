@@ -1,45 +1,34 @@
 
+import { fetchCardByPhone } from "./fetchCardByPhone";
 import { STEPS } from "./steps";
 
-const ID_BOARDS = '5ff8508fa9111b629721126f'
 export const fetchStatus = async (phone: string): Promise<string> => {
 
-    let query = phone
-        .replaceAll('+', '')
-        .trim()
-        // .replaceAll('(', '')
-        // .replaceAll(')', '')
-        // .replaceAll('-', '')
+    const card = await fetchCardByPhone(phone)
 
-    const url = `${process.env.TRELLO_API_URL}/search?idBoards=${ID_BOARDS}&modelTypes=cards&key=${process.env.TRELLO_API_KEY}&token=${process.env.TRELLO_API_TOKEN}&query=name:${query}`
-    const response = await fetch(url, {
-        method: 'GET'
-    })
-    const result = await response.json()
+    if (!card) return 'Не найдено, попробуйте поменять формат!'
 
-    const cards = result.cards
+    const url = `${process.env.TRELLO_API_URL}/list/${card.idList}?key=${process.env.TRELLO_API_KEY}&token=${process.env.TRELLO_API_TOKEN}`
 
-    if (!cards || !cards.length) return 'Не найдено, попробуйте поменять формат!'
+    try {
 
-    const card = cards[0]
+        const response = await fetch(url, {
+            method: 'GET'
+        })
+        const result = await response.json()
 
+        const index: number = parseInt(result.name?.split('.')[0])
 
-    return await fetchListName(card.idList)
-}
+        const step = STEPS[index]
+        const nextStep = STEPS[index + 1]
 
-const fetchListName = async (listId: string): Promise<string> => {
+        const status = 'Статус: *' + step.name + '*\n' +
+            'займет ' + step.duration + '\n' +
+            'Следующий этап: ' + nextStep.name
+        return status
 
-    const url = `${process.env.TRELLO_API_URL}/list/${listId}?key=${process.env.TRELLO_API_KEY}&token=${process.env.TRELLO_API_TOKEN}`
-    const response = await fetch(url, {
-        method: 'GET'
-    })
-    const result = await response.json()
-    const index:number = parseInt(result.name?.split('.')[0])
-    const step = STEPS[index]
-    const nextStep = STEPS[index + 1]
+    } catch (error) {
+        return 'Не определен, попробуите позднее...'
+    }
 
-    const status = 'Статус: *' + step.name + '*\n' + 
-                    'займет ' + step.duration  + '\n' +
-                    'Следующий этап: ' + nextStep.name
-    return status
 }

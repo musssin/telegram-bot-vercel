@@ -1,42 +1,36 @@
 
-import { STEPS } from "./steps";
-
-const ID_BOARDS = '5ff8508fa9111b629721126f'
+import { CHAT_FIELD_ID } from "./constants";
+import { fetchCardByPhone } from "./fetchCardByPhone";
+import createDebug from 'debug';
+const debug = createDebug('bot:about_command');
 export const setCardChatId = async (phone: string, chatId: string): Promise<string> => {
 
-    let query = phone
-        .replaceAll('+', '')
-        .trim()
+    const card = await fetchCardByPhone(phone)
 
-    const url = `${process.env.TRELLO_API_URL}/card?idBoards=${ID_BOARDS}&modelTypes=cards&key=${process.env.TRELLO_API_KEY}&token=${process.env.TRELLO_API_TOKEN}&query=name:${query}`
-    const response = await fetch(url, {
-        method: 'GET'
-    })
-    const result = await response.json()
+    if (!card) return 'Не найдено, попробуйте поменять формат!'
 
-    const cards = result.cards
+    const url = `${process.env.TRELLO_API_URL}/cards/${card.id}/customField/${CHAT_FIELD_ID}/item?key=${process.env.TRELLO_API_KEY}&token=${process.env.TRELLO_API_TOKEN}`
+    const body = { "value": { "text": chatId } }
 
-    if (!cards || !cards.length) return 'Не найдено, попробуйте поменять формат!'
+    try {
 
-    const card = cards[0]
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        })
+
+        debug(await response.text())
+        return 'Вы успешно подписались!'
+
+    } catch (e) {
+
+        debug(e)
+        return 'Не удалось подписаться, попробуйте позднее...'
+    }
 
 
-    return await fetchListName(card.idList)
-}
 
-const fetchListName = async (listId: string): Promise<string> => {
-
-    const url = `${process.env.TRELLO_API_URL}/list/${listId}?key=${process.env.TRELLO_API_KEY}&token=${process.env.TRELLO_API_TOKEN}`
-    const response = await fetch(url, {
-        method: 'GET'
-    })
-    const result = await response.json()
-    const index: number = parseInt(result.name?.split('.')[0])
-    const step = STEPS[index]
-    const nextStep = STEPS[index + 1]
-
-    const status = 'Статус: *' + step.name + '*\n' +
-        'займет ' + step.duration + '\n' +
-        'Следующий этап: ' + nextStep.name
-    return status
 }
