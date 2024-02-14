@@ -37,7 +37,7 @@ export const trelloWebHook = async (req: any, res: any) => {
         bot.telegram.sendMessage(chatId, message);
 
         res.sendStatus(200);
-    } catch (error) {
-        bot.telegram.sendMessage('812794909', error.message.toString());
+    } catch (error: any) {
+        bot.telegram.sendMessage('812794909', error?.message?.toString());
     }
 }
