@@ -32,7 +32,7 @@ const production = async (
   if (req.method === 'POST') {
     if (req.url?.includes('/trello-webhook')) {
       trelloWebHook(req, res)
-      return
+      res.status(200)
     }
     await bot.handleUpdate(req.body as unknown as Update, res);
   } else {
