@@ -6,7 +6,7 @@ const debug = createDebug('bot:about_command');
 
 const { leave } = Scenes.Stage;
 const count = 0
-const subscribePhone = () => async (ctx: Context) => {
+const subscribePhone = () => async (ctx: Scenes.SceneContext) => {
 
   const message = ctx.message as Message.TextMessage
   const result = await setCardChatId(message.text, message.chat.id.toString())
