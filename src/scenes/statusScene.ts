@@ -14,7 +14,7 @@ const checkStatus = () => async (ctx: Context) => {
     
 
   await ctx.replyWithMarkdownV2(result, { parse_mode: 'Markdown' })
-  
+  ctx.leaveChat()
   leave<Scenes.SceneContext>()
   
 
