@@ -27,7 +27,7 @@ const statusScene = new Scenes.BaseScene<Scenes.SceneContext>("statusScene");
 
 const message = `*Введите ваш номер:*`;
 statusScene.enter(ctx => ctx.replyWithMarkdownV2(message));
-statusScene.command("back", );
+statusScene.command("back",leave<Scenes.SceneContext>() );
 statusScene.on("message", checkStatus());
 
 
