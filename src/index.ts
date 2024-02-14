@@ -23,13 +23,6 @@ bot.command("status", ctx => ctx.scene.enter("statusScene"));
 bot.command("subscribe", ctx => ctx.scene.enter("subscribeScene"));
 bot.on("message", ctx => ctx.reply("Попробуйте /status или /subscribe"));
 
-//prod mode (Vercel)
-export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
-  await production(req, res, bot);
-};
-//dev mode
-ENVIRONMENT !== 'production' && development(bot);
-
 const app = express()
 app.use(bodyParser.json())
 
@@ -39,3 +32,11 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Сервер запущен на порту ${PORT}`);
 });
+//prod mode (Vercel)
+export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
+  await production(req, res, bot);
+};
+//dev mode
+ENVIRONMENT !== 'production' && development(bot);
+
+
