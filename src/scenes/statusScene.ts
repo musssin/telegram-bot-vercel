@@ -8,14 +8,14 @@ const { leave } = Scenes.Stage;
 let count = 0
 const checkStatus = () => async (ctx: Context) => {
   if (count > 1) {
-    leave<Scenes.SceneContext>()
-    return
+
   }
-  count++
-  
   const message = ctx.message as Message.TextMessage
   debug(`Triggered "checkStatus" command`);
   const result = await fetchStatus(message.text)
+
+  leave<Scenes.SceneContext>()
+  statusScene.on('message', () => {})
 
   await ctx.replyWithMarkdownV2(result, { parse_mode: 'Markdown' })
 
