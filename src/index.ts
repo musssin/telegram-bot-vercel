@@ -31,13 +31,13 @@ export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
 //dev mode
 ENVIRONMENT !== 'production' && development(bot);
 
-const app = express()
-app.use(bodyParser.json())
+// const app = express()
+// app.use(bodyParser.json())
 
-app.post('/trello-webhook', trelloWebHook);
+// app.post('/trello-webhook', trelloWebHook);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Сервер запущен на порту ${PORT}`);
-});
+// const PORT = process.env.PORT || 3000;
+// app.listen(PORT, () => {
+//   console.log(`Сервер запущен на порту ${PORT}`);
+// });
 
