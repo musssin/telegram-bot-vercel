@@ -13,7 +13,7 @@ const ENVIRONMENT = process.env.NODE_ENV || '';
 const bot = new Telegraf<Scenes.SceneContext>(BOT_TOKEN);
 
 const stage = new Scenes.Stage<Scenes.SceneContext>([statusScene, subscribeScene], {
-  ttl: 100
+  ttl: 1
 });
 
 bot.use(session());
