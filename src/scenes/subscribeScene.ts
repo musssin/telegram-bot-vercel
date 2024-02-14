@@ -14,6 +14,7 @@ const subscribePhone = () => async (ctx: Context) => {
   await ctx.replyWithMarkdownV2(result, { parse_mode: 'Markdown' })
 
   leave<Scenes.SceneContext>()
+  subscribeScene.leave()
 }
 
 const subscribeScene = new Scenes.BaseScene<Scenes.SceneContext>("subscribeScene");

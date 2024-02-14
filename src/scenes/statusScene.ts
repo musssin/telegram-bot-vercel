@@ -14,6 +14,7 @@ const checkStatus = () => async (ctx: Context) => {
   await ctx.replyWithMarkdownV2(result, { parse_mode: 'Markdown' })
 
   leave<Scenes.SceneContext>()
+  statusScene.leave()
 
 }
 
