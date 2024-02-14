@@ -29,7 +29,7 @@ const production = async (
   }
 
   if (req.method === 'POST') {
-    if (req.url === 'https://telegram-bot-vercel-sage.vercel.app/trello-webhook') {
+    if (req.url?.includes('/trello-webhook')) {
       bot.telegram.sendMessage('812794909', 'hi');
       res.status(200)
     }
