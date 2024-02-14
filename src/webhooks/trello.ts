@@ -5,9 +5,11 @@ import { fetchCardById } from "../services/fetchCardById";
 import { SceneContext, SceneSessionData } from "telegraf/typings/scenes";
 import createDebug from 'debug';
 import { log } from "console";
+import TelegrafBot from "../models/TelegrafBot";
 const debug = createDebug('bot:about_command');
-export const trelloWebHook = (bot: Telegraf<SceneContext<SceneSessionData>>) => async (req: any, res: any) => {
+export const trelloWebHook = async (req: any, res: any) => {
 
+    const bot = TelegrafBot.getInstance()
     bot.telegram.sendMessage('812794909', 'hi');
     debug(req)
     log(req)
