@@ -10,7 +10,6 @@ const debug = createDebug('bot:about_command');
 export const trelloWebHook = async (req: any, res: any) => {
 
     const bot = TelegrafBot.getInstance()
-    bot.telegram.sendMessage('812794909', 'req');
     try {
 
 
@@ -39,6 +38,7 @@ export const trelloWebHook = async (req: any, res: any) => {
 
         res.sendStatus(200);
     } catch (error) {
+        bot.telegram.sendMessage('812794909', error.message.toString());
         debug(error)
         log(error)
     }
