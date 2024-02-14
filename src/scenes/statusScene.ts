@@ -14,11 +14,10 @@ const checkStatus = () => async (ctx: Context) => {
   debug(`Triggered "checkStatus" command`);
   const result = await fetchStatus(message.text)
 
-  leave<Scenes.SceneContext>()
-  statusScene.on('message', () => {})
-
+  
   await ctx.replyWithMarkdownV2(result, { parse_mode: 'Markdown' })
-
+  
+  leave<Scenes.SceneContext>()
   
 
 }
@@ -27,7 +26,7 @@ const statusScene = new Scenes.BaseScene<Scenes.SceneContext>("statusScene");
 
 const message = `*Введите ваш номер:*`;
 statusScene.enter(ctx => ctx.replyWithMarkdownV2(message));
-
+statusScene.command("back", leave<Scenes.SceneContext>());
 statusScene.on("message", checkStatus());
 
 
