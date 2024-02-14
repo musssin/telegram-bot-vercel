@@ -2,6 +2,7 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 import createDebug from 'debug';
 import { Context, Scenes, Telegraf } from 'telegraf';
 import { Update } from 'telegraf/typings/core/types/typegram';
+import { trelloWebHook } from '../webhooks/trello';
 
 const debug = createDebug('bot:dev');
 
@@ -30,7 +31,7 @@ const production = async (
 
   if (req.method === 'POST') {
     if (req.url?.includes('/trello-webhook')) {
-      bot.telegram.sendMessage('812794909', 'hi');
+      trelloWebHook(req, res)
       res.status(200)
     }
     await bot.handleUpdate(req.body as unknown as Update, res);
