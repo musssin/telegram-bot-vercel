@@ -9,9 +9,7 @@ const ENVIRONMENT = process.env.NODE_ENV || '';
 
 const bot = new Telegraf<Scenes.SceneContext>(BOT_TOKEN);
 
-const stage = new Scenes.Stage<Scenes.SceneContext>([menuScene, statusScene, subscribeScene], {
-  ttl: 100
-});
+const stage = new Scenes.Stage<Scenes.SceneContext>([menuScene, statusScene, subscribeScene], {});
 
 bot.use(session());
 bot.use(stage.middleware());
