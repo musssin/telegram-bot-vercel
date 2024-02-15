@@ -19,7 +19,7 @@ const checkStatus = () => async (ctx: Scenes.SceneContext) => {
 
 const statusScene = new Scenes.BaseScene<Scenes.SceneContext>("statusScene");
 
-const message = `*Введите ваш номер:*\n \(в формате: +7\(XXX\)XXX-XX-XX\)`;
+const message = `*Введите ваш номер:*\n в формате: \\+7\\(XXX\\)XXX\\-XX\\-XX`;
 statusScene.enter(ctx => ctx.replyWithMarkdownV2(message));
 statusScene.command("back", leave<Scenes.SceneContext>());
 statusScene.on("message", checkStatus());
