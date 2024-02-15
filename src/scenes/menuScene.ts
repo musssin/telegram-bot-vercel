@@ -5,7 +5,7 @@ const debug = createDebug('bot:about_command');
 const CHECK_STATUS = 'Проверить статус'
 const SUBSCRIBE = 'Подписаться на обновления'
 
-const menuScene = new Scenes.BaseScene<Scenes.SceneContext>("statusScene");
+const menuScene = new Scenes.BaseScene<Scenes.SceneContext>("menuScene");
 
 menuScene.enter(ctx => ctx.reply(
   "Проверьте статус заказа или подпишитесь на обновления статуса",
