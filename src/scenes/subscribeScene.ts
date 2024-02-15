@@ -19,7 +19,7 @@ const subscribePhone = () => async (ctx: Scenes.SceneContext) => {
 
 const subscribeScene = new Scenes.BaseScene<Scenes.SceneContext>("subscribeScene");
 
-const message = `*Введите ваш номер:*\n \(в формате: +7\(XXX\)XXX-XX-XX\)`;
+const message = `*Введите ваш номер:*\n в формате: \\+7\\(XXX\\)XXX\\-XX\\-XX\\)`;
 subscribeScene.enter(ctx => ctx.replyWithMarkdownV2(message));
 subscribeScene.command("back", leave<Scenes.SceneContext>());
 subscribeScene.on("message", subscribePhone());
