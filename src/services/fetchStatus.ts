@@ -20,12 +20,7 @@ export const fetchStatus = async (phone: string): Promise<string> => {
         const index: number = parseInt(result.name?.split('.')[0])
 
         const step = STEPS[index]
-        const nextStep = STEPS[index + 1]
-
-        const status = 'Статус: *' + step.name + '*\n' +
-            'займет ' + step.duration + '\n' +
-            'Следующий этап: ' + nextStep.name
-        return status
+        return step.desc ?? 'Статус неопределен...'
 
     } catch (error) {
         return 'Не определен, попробуите позднее...'

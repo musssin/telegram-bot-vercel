@@ -3,9 +3,13 @@ import { Scenes, Telegraf, session } from 'telegraf';
 import { menuScene, statusScene, subscribeScene } from './scenes';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { development, production } from './core';
+import { GREETING } from './services/constants';
 
 const BOT_TOKEN = process.env.BOT_TOKEN || '';
 const ENVIRONMENT = process.env.NODE_ENV || '';
+
+const CHECK_STATUS = 'Проверить статус вашего заказа 🔍'
+const SUBSCRIBE = 'Отслеживать статус заказа ♻️'
 
 const bot = new Telegraf<Scenes.SceneContext>(BOT_TOKEN);
 
@@ -13,10 +17,14 @@ const stage = new Scenes.Stage<Scenes.SceneContext>([menuScene, statusScene, sub
 
 bot.use(session());
 bot.use(stage.middleware());
-bot.start(ctx => ctx.scene.enter('menuScene'))
+bot.start(ctx =>  {
+  ctx.reply(GREETING);
+  ctx.scene.enter('menuScene')}
+  )
 // bot.command("status", ctx => ctx.scene.enter("statusScene"));
 // bot.command("subscribe", ctx => ctx.scene.enter("subscribeScene"));
-// bot.on("message", ctx => ctx.reply("Попробуйте /status или /subscribe"));
+menuScene.hears(CHECK_STATUS, ctx => ctx.scene.enter('statusScene'));
+menuScene.hears(SUBSCRIBE, ctx => ctx.scene.enter('subscribeScene'));
 
 
 //prod mode (Vercel)

@@ -12,18 +12,30 @@ const subscribePhone = () => async (ctx: Scenes.SceneContext) => {
   const message = ctx.message as Message.TextMessage
   const result = await setCardChatId(message.text, message.chat.id.toString())
 
-  const status = await fetchStatus(message.text)
-
-  const resultWithStatus = result + '\n' + status
-  await ctx.replyWithMarkdownV2(resultWithStatus, { parse_mode: 'Markdown' })
+  // const status = await fetchStatus(message.text)
+  // const resultWithStatus = result + '\n' + status
+  
+  await ctx.reply(result)
 
   ctx.scene.enter('menuScene')
 }
 
 const subscribeScene = new Scenes.BaseScene<Scenes.SceneContext>("subscribeScene");
 
-const message = `*Введите ваш номер:*\n в формате: \\+7\\(XXX\\)XXX\\-XX\\-XX\\)`;
-subscribeScene.enter(ctx => ctx.replyWithMarkdownV2(message));
+const message = `
+♻ Отслеживать статус заказа
+Чтобы проверить текущий статус вашего заказа выпускных лент, введите, пожалуйста, номер телефона , который был предоставлен вам нашим менеджером при подтверждении заказа или при заполнении «Образец Списка». 
+
+Мы понимаем, насколько важно быть в курсе всех этапов производства вашего заказа, и стараемся предоставить вам всю необходимую информацию для вашего удобства и спокойствия.
+
+📝 Пожалуйста, введите номер вашего заказа ниже, в формате:
+
+ +7(XXX)XXX-XX-XX
+
+чтобы мы могли предоставить вам актуальный статус и уведомим каждый раз когда измениться статус вашего заказа 😊
+
+`;
+subscribeScene.enter(ctx => ctx.reply(message));
 subscribeScene.command("back", leave<Scenes.SceneContext>());
 subscribeScene.on("message", subscribePhone());
 
