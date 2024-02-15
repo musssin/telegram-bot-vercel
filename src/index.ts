@@ -16,7 +16,7 @@ const stage = new Scenes.Stage<Scenes.SceneContext>([menuScene, statusScene, sub
 bot.use(session());
 bot.use(stage.middleware());
 // bot.start(ctx => ctx.scene.enter('menuScene'))
-bot.command('/start', (ctx) => ctx.scene.enter('menuScene'));
+bot.command('start', (ctx) => ctx.scene.enter('menuScene'));
 bot.command("status", ctx => ctx.scene.enter("statusScene"));
 bot.command("subscribe", ctx => ctx.scene.enter("subscribeScene"));
 bot.on("message", ctx => ctx.reply("Попробуйте /status или /subscribe"));
