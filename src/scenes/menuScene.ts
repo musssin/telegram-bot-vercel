@@ -2,8 +2,8 @@ import { Markup, Scenes } from 'telegraf';
 import createDebug from 'debug';
 const debug = createDebug('bot:about_command');
 
-const CHECK_STATUS = 'Проверить статус'
-const SUBSCRIBE = 'Подписаться на обновления'
+const CHECK_STATUS = 'Проверить статус вашего заказа 🔍'
+const SUBSCRIBE = 'Отслеживать статус заказа ♻️'
 
 const menuScene = new Scenes.BaseScene<Scenes.SceneContext>("menuScene");
 

@@ -2,6 +2,7 @@ import { Context, Scenes } from 'telegraf';
 import createDebug from 'debug';
 import { Message } from 'telegraf/typings/core/types/typegram';
 import { setCardChatId } from '../services/setCardChatId';
+import { fetchStatus } from '../services/fetchStatus';
 const debug = createDebug('bot:about_command');
 
 const { leave } = Scenes.Stage;
@@ -11,8 +12,10 @@ const subscribePhone = () => async (ctx: Scenes.SceneContext) => {
   const message = ctx.message as Message.TextMessage
   const result = await setCardChatId(message.text, message.chat.id.toString())
 
+  const status = await fetchStatus(message.text)
 
-  await ctx.replyWithMarkdownV2(result, { parse_mode: 'Markdown' })
+  const resultWithStatus = result + '\n' + status
+  await ctx.replyWithMarkdownV2(resultWithStatus, { parse_mode: 'Markdown' })
 
   ctx.scene.enter('menuScene')
 }
