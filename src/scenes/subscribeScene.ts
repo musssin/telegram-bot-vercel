@@ -11,15 +11,15 @@ const subscribePhone = () => async (ctx: Scenes.SceneContext) => {
   const message = ctx.message as Message.TextMessage
   const result = await setCardChatId(message.text, message.chat.id.toString())
 
-  
+
   await ctx.replyWithMarkdownV2(result, { parse_mode: 'Markdown' })
-  
-  ctx.scene.leave()
+
+  ctx.scene.enter('menuScene')
 }
 
 const subscribeScene = new Scenes.BaseScene<Scenes.SceneContext>("subscribeScene");
 
-const message = `*Введите ваш номер:*`;
+const message = `*Введите ваш номер:*\n (в формате: +7(XXX)XXX-XX-XX)`;
 subscribeScene.enter(ctx => ctx.replyWithMarkdownV2(message));
 subscribeScene.command("back", leave<Scenes.SceneContext>());
 subscribeScene.on("message", subscribePhone());
