@@ -12,7 +12,8 @@ const checkStatus = () => async (ctx: Scenes.SceneContext) => {
   const result = await fetchStatus(message.text)
   await ctx.reply(result)
 
-  ctx.scene.enter('menuScene')
+  // ctx.scene.enter('menuScene')
+  ctx.scene.leave()
 
 
 }

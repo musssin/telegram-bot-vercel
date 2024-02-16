@@ -18,7 +18,7 @@ const stage = new Scenes.Stage<Scenes.SceneContext>([menuScene, statusScene, sub
 bot.use(session());
 bot.use(stage.middleware());
 bot.start(ctx => {
-  ctx.reply(GREETING, Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).resize(),);
+  ctx.reply(GREETING, Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize());
   // ctx.scene.enter('menuScene')
 }
 )

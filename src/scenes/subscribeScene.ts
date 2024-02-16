@@ -14,10 +14,11 @@ const subscribePhone = () => async (ctx: Scenes.SceneContext) => {
 
   // const status = await fetchStatus(message.text)
   // const resultWithStatus = result + '\n' + status
-  
+
   await ctx.reply(result)
 
-  ctx.scene.enter('menuScene')
+  // ctx.scene.enter('menuScene')
+  ctx.scene.leave()
 }
 
 const subscribeScene = new Scenes.BaseScene<Scenes.SceneContext>("subscribeScene");
