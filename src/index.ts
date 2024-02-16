@@ -17,14 +17,15 @@ const stage = new Scenes.Stage<Scenes.SceneContext>([menuScene, statusScene, sub
 
 bot.use(session());
 bot.use(stage.middleware());
-bot.start(ctx =>  {
+bot.start(ctx => {
   ctx.reply(GREETING);
-  ctx.scene.enter('menuScene')}
-  )
+  ctx.scene.enter('menuScene')
+}
+)
 // bot.command("status", ctx => ctx.scene.enter("statusScene"));
 // bot.command("subscribe", ctx => ctx.scene.enter("subscribeScene"));
-menuScene.hears(CHECK_STATUS, ctx => ctx.scene.enter('statusScene'));
-menuScene.hears(SUBSCRIBE, ctx => ctx.scene.enter('subscribeScene'));
+bot.hears(CHECK_STATUS, ctx => ctx.scene.enter('statusScene'));
+bot.hears(SUBSCRIBE, ctx => ctx.scene.enter('subscribeScene'));
 
 
 //prod mode (Vercel)
