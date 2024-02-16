@@ -8,7 +8,7 @@ const SUBSCRIBE = 'Отслеживать статус заказа ♻️'
 const menuScene = new Scenes.BaseScene<Scenes.SceneContext>("menuScene");
 
 menuScene.enter(ctx => ctx.reply(
-  '',
+  'Меню',
   Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).resize(),
 ),);
 menuScene.hears(CHECK_STATUS, ctx => ctx.scene.enter('statusScene'));
