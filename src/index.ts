@@ -1,4 +1,4 @@
-import { Scenes, Telegraf, session } from 'telegraf';
+import { Markup, Scenes, Telegraf, session } from 'telegraf';
 
 import { menuScene, statusScene, subscribeScene } from './scenes';
 import { VercelRequest, VercelResponse } from '@vercel/node';
@@ -18,8 +18,8 @@ const stage = new Scenes.Stage<Scenes.SceneContext>([menuScene, statusScene, sub
 bot.use(session());
 bot.use(stage.middleware());
 bot.start(ctx => {
-  ctx.reply(GREETING);
-  ctx.scene.enter('menuScene')
+  ctx.reply(GREETING, Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).resize(),);
+  // ctx.scene.enter('menuScene')
 }
 )
 // bot.command("status", ctx => ctx.scene.enter("statusScene"));
