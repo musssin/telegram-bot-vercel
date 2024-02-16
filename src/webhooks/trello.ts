@@ -19,15 +19,12 @@ export const trelloWebHook = async (req: any, res: any) => {
 
         const changedStatusIndex = parseInt(req.body?.action?.display?.entities?.listAfter?.text?.split('.')[0]);
         const changedStatus = STEPS[changedStatusIndex]
-        const changedStatusNext = STEPS[changedStatusIndex + 1]
 
         const chatField = card.customFieldItems?.find((customField: any) => customField.idCustomField === CHAT_FIELD_ID)
         const chatId = chatField?.value?.text
         if (!chatId) return
 
-        const message = 'Статус заказа изменился на: ' + changedStatus.name + '\n' +
-            'займет ' + changedStatus.duration + '\n' +
-            'Следующий этап: ' + changedStatusNext.name;
+        const message = changedStatus.desc ?? 'Статус не определен...'
 
         bot.telegram.sendMessage(chatId, message);
 
