@@ -3,13 +3,11 @@ import { Markup, Scenes, Telegraf, session } from 'telegraf';
 import { menuScene, statusScene, subscribeScene } from './scenes';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { development, production } from './core';
-import { GREETING } from './services/constants';
+import { CHECK_STATUS, GREETING, SUBSCRIBE } from './services/constants';
 
 const BOT_TOKEN = process.env.BOT_TOKEN || '';
 const ENVIRONMENT = process.env.NODE_ENV || '';
 
-const CHECK_STATUS = 'Проверить статус вашего заказа 🔍'
-const SUBSCRIBE = 'Отслеживать статус заказа ♻️'
 
 const bot = new Telegraf<Scenes.SceneContext>(BOT_TOKEN);
 

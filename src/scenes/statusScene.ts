@@ -1,7 +1,8 @@
-import { Context, Scenes } from 'telegraf';
+import {  Markup, Scenes } from 'telegraf';
 import createDebug from 'debug';
 import { fetchStatus } from '../services/fetchStatus';
 import { Message } from 'telegraf/typings/core/types/typegram';
+import { CHECK_STATUS, SUBSCRIBE } from '../services/constants';
 const debug = createDebug('bot:about_command');
 
 
@@ -10,7 +11,8 @@ const checkStatus = () => async (ctx: Scenes.SceneContext) => {
   const message = ctx.message as Message.TextMessage
   debug(`Triggered "checkStatus" command`);
   const result = await fetchStatus(message.text)
-  await ctx.reply(result)
+  await ctx.reply(result,
+    Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize())
 
   // ctx.scene.enter('menuScene')
   ctx.scene.leave()
