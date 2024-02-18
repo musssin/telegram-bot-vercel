@@ -1,4 +1,5 @@
 
+import { StatusForm } from "../models/StatusForm";
 import { CHAT_FIELD_ID } from "./constants";
 import { fetchCardByPhone } from "./fetchCardByPhone";
 import createDebug from 'debug';
@@ -13,11 +14,18 @@ const SUCCESS_TEXT = `✅ Вы успешно подписались на отс
 Мы приложим все усилия, чтобы ваш заказ был выполнен качественно и в срок. Если у вас возникнут вопросы по заказу или вы захотите получить дополнительную информацию, пожалуйста, не стесняйтесь обращаться к менеджеру . А так здесь вы узнаете  о готовности вашего заказа 😉👌 Мы всегда рады помочь!
 Ожидайте и мы уведомим вас о изменениях🙂
 `
-export const setCardChatId = async (phone: string, chatId: string): Promise<string> => {
+export const setCardChatId = async (phone: string, chatId: string): Promise<StatusForm> => {
 
+    const status: StatusForm = {
+        error: true,
+        text: ''
+    }
     const card = await fetchCardByPhone(phone)
 
-    if (!card) return 'Не найдено, попробуйте поменять формат!'
+    if (!card) {
+        status.text = 'Не найдено, попробуйте поменять формат!'
+        return status
+    }
 
     const url = `${process.env.TRELLO_API_URL}/cards/${card.id}/customField/${CHAT_FIELD_ID}/item?key=${process.env.TRELLO_API_KEY}&token=${process.env.TRELLO_API_TOKEN}`
     const body = { "value": { "text": chatId } }
@@ -33,12 +41,15 @@ export const setCardChatId = async (phone: string, chatId: string): Promise<stri
         })
 
         debug(await response.text())
-        return SUCCESS_TEXT
+
+        status.error = false;
+        status.text = SUCCESS_TEXT;
+        return status
 
     } catch (e) {
-
-        debug(e)
-        return 'Не удалось подписаться, попробуйте позднее...'
+        status.error = true;
+        status.text = 'Не удалось подписаться, попробуйте позднее...'
+        return  status
     }
 
 

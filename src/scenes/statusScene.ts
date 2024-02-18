@@ -11,11 +11,11 @@ const checkStatus = () => async (ctx: Scenes.SceneContext) => {
   const message = ctx.message as Message.TextMessage
   debug(`Triggered "checkStatus" command`);
   const result = await fetchStatus(message.text)
+  
   await ctx.reply(result,
     Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize())
 
-  // ctx.scene.enter('menuScene')
-  ctx.scene.leave()
+  if(!result.error) ctx.scene.leave()
 
 
 }

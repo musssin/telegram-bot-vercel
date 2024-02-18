@@ -7,20 +7,17 @@ import { CHECK_STATUS, SUBSCRIBE } from '../services/constants';
 const debug = createDebug('bot:about_command');
 
 const { leave } = Scenes.Stage;
-const count = 0
 const subscribePhone = () => async (ctx: Scenes.SceneContext) => {
 
   const message = ctx.message as Message.TextMessage
   const result = await setCardChatId(message.text, message.chat.id.toString())
 
-  // const status = await fetchStatus(message.text)
-  // const resultWithStatus = result + '\n' + status
-
   await ctx.reply(result,
     Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize())
 
-  // ctx.scene.enter('menuScene')
-  ctx.scene.leave()
+  if (!result.error) {
+    ctx.scene.leave()
+  }
 }
 
 const subscribeScene = new Scenes.BaseScene<Scenes.SceneContext>("subscribeScene");
