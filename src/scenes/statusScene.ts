@@ -2,7 +2,7 @@ import { Markup, Scenes } from 'telegraf';
 import createDebug from 'debug';
 import { fetchStatus } from '../services/fetchStatus';
 import { Message } from 'telegraf/typings/core/types/typegram';
-import { CHECK_STATUS, SUBSCRIBE } from '../services/constants';
+import { CHECK_STATUS, GREETING, SUBSCRIBE } from '../services/constants';
 const debug = createDebug('bot:about_command');
 
 
@@ -32,7 +32,10 @@ const message = `
 
 Еще можете Подписаться и «Отслеживать статус вашего заказа ♻ »  чтобы получать мгновенные уведомления о любых изменениях.`;
 statusScene.enter(ctx => ctx.reply(message, Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize()));
-statusScene.command("start", ctx => ctx.scene.leave());
+statusScene.command("start", ctx => {
+  ctx.scene.leave();
+  ctx.reply(GREETING, Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize());
+});
 statusScene.command("back", leave<Scenes.SceneContext>());
 statusScene.on("message", checkStatus());
 

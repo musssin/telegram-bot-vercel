@@ -3,7 +3,7 @@ import createDebug from 'debug';
 import { Message } from 'telegraf/typings/core/types/typegram';
 import { setCardChatId } from '../services/setCardChatId';
 import { fetchStatus } from '../services/fetchStatus';
-import { CHECK_STATUS, SUBSCRIBE } from '../services/constants';
+import { CHECK_STATUS, GREETING, SUBSCRIBE } from '../services/constants';
 const debug = createDebug('bot:about_command');
 
 const { leave } = Scenes.Stage;
@@ -36,7 +36,10 @@ const message = `
 
 `;
 subscribeScene.enter(ctx => ctx.reply(message, Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize()));
-subscribeScene.command("start", ctx => ctx.scene.leave());
+subscribeScene.command("start", ctx => {
+  ctx.scene.leave();
+  ctx.reply(GREETING, Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize());
+});
 subscribeScene.command("back", leave<Scenes.SceneContext>());
 subscribeScene.on("message", subscribePhone());
 
