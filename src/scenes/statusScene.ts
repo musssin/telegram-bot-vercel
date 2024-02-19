@@ -32,6 +32,7 @@ const message = `
 
 Еще можете Подписаться и «Отслеживать статус вашего заказа ♻ »  чтобы получать мгновенные уведомления о любых изменениях.`;
 statusScene.enter(ctx => ctx.reply(message, Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize()));
+statusScene.command("start", ctx => ctx.scene.leave());
 statusScene.command("back", leave<Scenes.SceneContext>());
 statusScene.on("message", checkStatus());
 

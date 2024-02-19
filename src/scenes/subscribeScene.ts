@@ -36,6 +36,7 @@ const message = `
 
 `;
 subscribeScene.enter(ctx => ctx.reply(message, Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize()));
+subscribeScene.command("start", ctx => ctx.scene.leave());
 subscribeScene.command("back", leave<Scenes.SceneContext>());
 subscribeScene.on("message", subscribePhone());
 
