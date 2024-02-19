@@ -1,4 +1,4 @@
-import {  Markup, Scenes } from 'telegraf';
+import { Markup, Scenes } from 'telegraf';
 import createDebug from 'debug';
 import { fetchStatus } from '../services/fetchStatus';
 import { Message } from 'telegraf/typings/core/types/typegram';
@@ -11,11 +11,11 @@ const checkStatus = () => async (ctx: Scenes.SceneContext) => {
   const message = ctx.message as Message.TextMessage
   debug(`Triggered "checkStatus" command`);
   const result = await fetchStatus(message.text)
-  
+
   await ctx.reply(result,
     Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize())
 
-  if(!result.error) ctx.scene.leave()
+  if (!result.error) ctx.scene.leave()
 
 
 }
@@ -31,7 +31,7 @@ const message = `
 Это необходимо для верификации и будет использоваться для отслеживания статуса вашего заказа через наш телеграм-бот. Напишите тот номер, который вы указали в образце списка при заказе
 
 Еще можете Подписаться и «Отслеживать статус вашего заказа ♻ »  чтобы получать мгновенные уведомления о любых изменениях.`;
-statusScene.enter(ctx => ctx.reply(message));
+statusScene.enter(ctx => ctx.reply(message, Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize()));
 statusScene.command("back", leave<Scenes.SceneContext>());
 statusScene.on("message", checkStatus());
 

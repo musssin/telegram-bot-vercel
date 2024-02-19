@@ -1,4 +1,4 @@
-import {  Markup, Scenes } from 'telegraf';
+import { Markup, Scenes } from 'telegraf';
 import createDebug from 'debug';
 import { Message } from 'telegraf/typings/core/types/typegram';
 import { setCardChatId } from '../services/setCardChatId';
@@ -35,7 +35,7 @@ const message = `
 чтобы мы могли предоставить вам актуальный статус и уведомим каждый раз когда измениться статус вашего заказа 😊
 
 `;
-subscribeScene.enter(ctx => ctx.reply(message));
+subscribeScene.enter(ctx => ctx.reply(message, Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize()));
 subscribeScene.command("back", leave<Scenes.SceneContext>());
 subscribeScene.on("message", subscribePhone());
 
