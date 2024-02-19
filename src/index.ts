@@ -17,7 +17,7 @@ bot.use(session());
 bot.use(stage.middleware());
 bot.start(ctx => {
   ctx.reply(GREETING, Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize());
-  // ctx.scene.enter('menuScene')
+  ctx.scene.leave()
 }
 )
 // bot.command("status", ctx => ctx.scene.enter("statusScene"));
@@ -25,7 +25,6 @@ bot.start(ctx => {
 bot.hears(CHECK_STATUS, ctx => ctx.scene.enter('statusScene'));
 bot.hears(SUBSCRIBE, ctx => ctx.scene.enter('subscribeScene'));
 bot.on('message', ctx => ctx.reply('Проверьте статус заказа или подпишитесь на обновления статуса', Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize()))
-
 //prod mode (Vercel)
 export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
   await production(req, res, bot);
