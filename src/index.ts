@@ -24,7 +24,7 @@ bot.start(ctx => {
 // bot.command("subscribe", ctx => ctx.scene.enter("subscribeScene"));
 bot.hears(CHECK_STATUS, ctx => ctx.scene.enter('statusScene'));
 bot.hears(SUBSCRIBE, ctx => ctx.scene.enter('subscribeScene'));
-bot.on('message', ctx => ctx.reply('',Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize()))
+bot.on('message', ctx => ctx.reply('Проверьте статус заказа или подпишитесь на обновления статуса', Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize()))
 
 //prod mode (Vercel)
 export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
