@@ -5,11 +5,12 @@ import { Message } from 'telegraf/typings/core/types/typegram';
 import { CHECK_STATUS, GREETING, SUBSCRIBE, BACK } from '../services/constants';
 const debug = createDebug('bot:about_command');
 
-
-const { leave } = Scenes.Stage;
 const checkStatus = () => async (ctx: Scenes.SceneContext) => {
   const message = ctx.message as Message.TextMessage
   debug(`Triggered "checkStatus" command`);
+
+  if ([CHECK_STATUS, SUBSCRIBE, BACK].includes(message.text)) return
+
   const result = await fetchStatus(message.text)
 
   await ctx.reply(result,

@@ -9,6 +9,9 @@ const { leave } = Scenes.Stage;
 const subscribePhone = () => async (ctx: Scenes.SceneContext) => {
 
   const message = ctx.message as Message.TextMessage
+
+  if ([CHECK_STATUS, SUBSCRIBE, BACK].includes(message.text)) return
+
   const result = await setCardChatId(message.text, message.chat.id.toString())
 
   await ctx.reply(result,
