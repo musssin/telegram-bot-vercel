@@ -3,7 +3,7 @@ import { Markup, Scenes, Telegraf, session } from 'telegraf';
 import { menuScene, statusScene, subscribeScene } from './scenes';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { development, production } from './core';
-import { CHECK_STATUS, GREETING, SUBSCRIBE } from './services/constants';
+import { BACK, CHECK_STATUS, GREETING, SUBSCRIBE } from './services/constants';
 
 const BOT_TOKEN = process.env.BOT_TOKEN || '';
 const ENVIRONMENT = process.env.NODE_ENV || '';
@@ -21,6 +21,7 @@ bot.start(ctx => {
 )
 // bot.command("status", ctx => ctx.scene.enter("statusScene"));
 // bot.command("subscribe", ctx => ctx.scene.enter("subscribeScene"));
+bot.hears(BACK, ctx => ctx.scene.leave());
 bot.hears(CHECK_STATUS, ctx => ctx.scene.enter('statusScene'));
 bot.hears(SUBSCRIBE, ctx => ctx.scene.enter('subscribeScene'));
 bot.on('message', ctx => ctx.reply('Проверьте статус заказа или подпишитесь на обновления статуса', Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize()))
