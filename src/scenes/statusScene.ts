@@ -2,7 +2,7 @@ import { Markup, Scenes } from 'telegraf';
 import createDebug from 'debug';
 import { fetchStatus } from '../services/fetchStatus';
 import { Message } from 'telegraf/typings/core/types/typegram';
-import { CHECK_STATUS, GREETING, SUBSCRIBE } from '../services/constants';
+import { CHECK_STATUS, GREETING, SUBSCRIBE, BACK } from '../services/constants';
 const debug = createDebug('bot:about_command');
 
 
@@ -31,12 +31,14 @@ const message = `
 Это необходимо для верификации и будет использоваться для отслеживания статуса вашего заказа через наш телеграм-бот. Напишите тот номер, который вы указали в образце списка при заказе
 
 Еще можете Подписаться и «Отслеживать статус вашего заказа ♻ »  чтобы получать мгновенные уведомления о любых изменениях.`;
-statusScene.enter(ctx => ctx.reply(message, Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize()));
+statusScene.enter(ctx => ctx.reply(message, Markup.keyboard([CHECK_STATUS, SUBSCRIBE, BACK]).oneTime().resize()));
 statusScene.command("start", ctx => {
   ctx.scene.leave();
   ctx.reply(GREETING, Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize());
 });
-statusScene.command("back", leave<Scenes.SceneContext>());
+statusScene.command(BACK, ctx => ctx.scene.leave());
+statusScene.hears(CHECK_STATUS, ctx => ctx.scene.enter('statusScene'));
+statusScene.hears(SUBSCRIBE, ctx => ctx.scene.enter('subscribeScene'));
 statusScene.on("message", checkStatus());
 
 

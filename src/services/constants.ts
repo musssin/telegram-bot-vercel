@@ -17,5 +17,6 @@ https://www.youtube.com/watch?v=XqWiy8_pF6U&t=86s 🌟`
 
 const CHECK_STATUS = 'Проверить статус вашего заказа 🔍'
 const SUBSCRIBE = 'Отслеживать статус заказа ♻️'
+const BACK = 'Назад '
 
-export { CHAT_FIELD_ID, BOARD_ID, ACTION_MOVING_CARD, GREETING, CHECK_STATUS, SUBSCRIBE }
+export { CHAT_FIELD_ID, BOARD_ID, ACTION_MOVING_CARD, GREETING, CHECK_STATUS, SUBSCRIBE, BACK }

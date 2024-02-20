@@ -2,8 +2,7 @@ import { Markup, Scenes } from 'telegraf';
 import createDebug from 'debug';
 import { Message } from 'telegraf/typings/core/types/typegram';
 import { setCardChatId } from '../services/setCardChatId';
-import { fetchStatus } from '../services/fetchStatus';
-import { CHECK_STATUS, GREETING, SUBSCRIBE } from '../services/constants';
+import { BACK, CHECK_STATUS, GREETING, SUBSCRIBE } from '../services/constants';
 const debug = createDebug('bot:about_command');
 
 const { leave } = Scenes.Stage;
@@ -35,12 +34,14 @@ const message = `
 чтобы мы могли предоставить вам актуальный статус и уведомим каждый раз когда измениться статус вашего заказа 😊
 
 `;
-subscribeScene.enter(ctx => ctx.reply(message, Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize()));
+subscribeScene.enter(ctx => ctx.reply(message, Markup.keyboard([CHECK_STATUS, SUBSCRIBE, BACK]).oneTime().resize()));
 subscribeScene.command("start", ctx => {
   ctx.scene.leave();
   ctx.reply(GREETING, Markup.keyboard([CHECK_STATUS, SUBSCRIBE]).oneTime().resize());
 });
-subscribeScene.command("back", leave<Scenes.SceneContext>());
+subscribeScene.command(BACK, ctx => ctx.scene.leave());
+subscribeScene.hears(CHECK_STATUS, ctx => ctx.scene.enter('statusScene'));
+subscribeScene.hears(SUBSCRIBE, ctx => ctx.scene.enter('subscribeScene'));
 subscribeScene.on("message", subscribePhone());
 
 
